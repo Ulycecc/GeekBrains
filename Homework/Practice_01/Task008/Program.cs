@@ -5,7 +5,7 @@
 // 5 -> 2, 4
 // 8 -> 2, 4, 6, 8
 
-Console.WriteLine("Введите число");
+Console.WriteLine("Введите число больше единицы");
 int N = Convert.ToInt32(Console.ReadLine());
 
 int count = 2;
