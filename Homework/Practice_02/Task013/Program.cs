@@ -11,9 +11,16 @@ int num = Convert.ToInt32(Console.ReadLine());
 if(num < 100)
 {
 string intr1 = "третьей цифры нет";
-Console.WriteLine($"{num} ->" , intr1); 
+Console.Write($"{num} -> ");
+Console.WriteLine(intr1); 
 }
-else {
-    int result = (num / 10 / 10 % 10);
-    Console.WriteLine($"{num} -> {result}");
+else
+{
+    int result = num;
+    while(result>1000)
+    {
+        result = result / 10;
     }
+    result = result % 10;
+    Console.WriteLine($"{num} -> {result}");
+}
