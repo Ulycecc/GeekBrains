@@ -11,12 +11,12 @@ int Contour(int [,] arr, int N, int itr, int Nmax)
     int n = arr.GetLength(0) - itr;
     int m = arr.GetLength(1) - itr;
     
-    for(int j = itr; j < m; j++){N++;arr[itr,j]=N;}
+    for(int j = itr; j < m; j++){ N++; arr[itr,j]=N; }
     if(N==Nmax){return N;}
-    for(int i = itr+1; i < n; i++){N++;arr[i,m-1]=N;}
+    for(int i = itr+1; i < n; i++){ N++; arr[i,m-1]=N; }
     if(N==Nmax){return N;}
-    for(int j = m-2; j > itr; j--){N++;arr[(n-1),j]=N;}
-    for(int i = n-1; i > itr; i--){N++;arr[i,itr]=N;}
+    for(int j = m-2; j > itr; j--){ N++; arr[(n-1),j]=N; }
+    for(int i = n-1; i > itr; i--){ N++; arr[i,itr]=N; }
     return N;
 }
 void PrtArr(int [,] arr)
