@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} Shop {% endblock %}</title>
+</head>
+
+<body>
+    <header>
+        {% block header %}
+        <p>
+            <font size="4,5" color="#917a79" face="Times New Roman">Носить не переносить</font>
+        </p>
+        {% endblock %}
+    </header>
+
+    {% block nav %}
+    <ul>
+        <li>
+            <a href="{{ url_for('shoes') }}">Обувь</a>
+        </li>
+        <li>
+            <a href="{{ url_for('clothes') }}">Одежда</a>
+        </li>
+        <li>
+            <a href="{{ url_for('index') }}">Основная!</a>
+        </li>
+
+    </ul>
+
+    {% endblock %}
+    </nav>
+
+    <main>
+        {% block main %}
+        <br>
+        {% for i in content %}
+        <font size="4" color="#3e7872" face="Times New Roman">
+            <div>
+                Название: {{ i.name }} <br>
+                Цена: {{ i.price }} <br>
+                Описание: {{ i.description }}<br>
+                <br>
+            </div>
+        </font>
+        {% endfor %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        {% block footer %}
+        <p>
+            <font size="3,5" color="#917a79" face="Times New Roman">У нас длинные руки
+                &#xa9</font>
+        </p>
+        </font>
+        {% endblock %}
+    </footer>
+</body>
+
+</html>
