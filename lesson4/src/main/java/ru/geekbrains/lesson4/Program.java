@@ -1,40 +1,116 @@
-package ru.geekbrains.lesson4;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Scanner;
 
-import java.util.ArrayList;
-
-public class Program {
-
+public class Main {
     public static void main(String[] args) {
-        ArrayList<Integer> list = new ArrayList<>();
-        list.add(1);
-        list.add(-6);
-
-        Employee employee1 = new Employee("User1", 54);
-        Employee employee2 = new Employee("User2", 33);
-        Employee employee3 = new Employee("User3", 21);
-
-        System.out.println(employee1.hashCode());
-        System.out.println(employee2.hashCode());
-        System.out.println(employee3.hashCode());
-
-
-        HashMap<String, String> hashMap = new HashMap<>(4);
-        String oldValue = hashMap.put("+79001112233", "AAAAAAAA");
-        oldValue = hashMap.put("+79001112231", "BBBBBB");
-        oldValue = hashMap.put("+79001112232", "CCCCCC");
-        oldValue = hashMap.put("+79001112233", "DDDDDDDD");
-        oldValue = hashMap.put("+79001112234", "EEEEEEE");
-        oldValue = hashMap.put("+79001112235", "MMMMMM");
-        oldValue = hashMap.put("+79001112236", "FFFFF");
-        oldValue = hashMap.put("+79001112237", "GGGGG1");
-        oldValue = hashMap.put("+79001112238", "GGGGG2");
-        oldValue = hashMap.put("+79001112239", "GGGGG3");
-        oldValue = hashMap.put("+79001112230", "GGGGG4");
-
-        System.out.println(hashMap);
-
-
-
+        Scanner scanner = new Scanner(System.in);
+        int x = scanner.nextInt();
+        int y = scanner.nextInt();
+        int p = scanner.nextInt();
+        System.out.println(game(x, y, p));
     }
 
+    public static int game(int x, int y, int p) {
+        if (y - x > 0) {
+            int[] state1 = {x, y - x, p};
+        } else {
+            return 1;
+        }
+        Set<int[]> states = new HashSet<>();
+        states.add(state1);
+        int i = 1;
+        Set<int[]> A = new HashSet<>();
+        A.add(state1);
+        while (!A.isEmpty()) {
+            Set<int[]> B = new HashSet<>();
+            i++;
+            int m1_ = 10000;
+            int m2_ = 10000;
+            int m4_ = 10000;
+            int m6_ = 10000;
+            for (int[] state : A) {
+                int x = state[0];
+                int y = state[1];
+                int z = state[2];
+                if (x >= y + z) {
+                    return i;
+                }
+                int b = (x >= z) ? x - z : 0;
+                List<Integer> J = new ArrayList<>();
+                for (int j = 0; j <= x; j++) {
+                    if (b <= j && j <= y && 2 * x - z - j > 0) {
+                        J.add(j);
+                    }
+                }
+                if (p < x) {
+                    J = J.stream().filter(j -> (y - j) * x < y * (2 * x - z - j)).collect(Collectors.toList());
+                }
+                for (int j : J) {
+                    int new_y = (y - j <= 0) ? 0 : y - j;
+                    int new_z = (new_y == 0) ? ((z - x + j > 0) ? z - x + j : 0) : ((z - x + j > 0) ? z - x + j + p : p);
+                    int new_x = 2 * x - z - j;
+                    int[] new_state = {new_x, new_y, new_z};
+                    if (new_y <= 0 && new_z <= 0) {
+                        return i;
+                    } else if (new_x >= new_y + new_z) {
+                        return i + 1;
+                    } else if (new_y == 0) {
+                        if (new_x >= new_z) {
+                            return i + 1;
+                        } else {
+                            B.add(new_state);
+                            states.add(new_state);
+                            if ((double) new_z / new_x < m1_) {
+                                m1_ = (double) new_z / new_x;
+                                m1 = new_state;
+                            }
+                            if ((double) new_y / new_x < m2_) {
+                                m2_ = (double) new_y / new_x;
+                                m2 = new_state;
+                            }
+                            if ((double) (new_y + new_z) / new_x < m4_) {
+                                m4_ = (double) (new_y + new_z) / new_x;
+                                m4 = new_state;
+                            }
+                            if ((new_y + new_z) < m6_) {
+                                m6_ = (new_y + new_z);
+                                m6 = new_state;
+                            }
+                            break;
+                        }
+                    } else {
+                        if ((double) new_z / new_x < m1_) {
+                            m1_ = (double) new_z / new_x;
+                            m1 = new_state;
+                        }
+                        if ((double) new_y / new_x < m2_) {
+                            m2_ = (double) new_y / new_x;
+                            m2 = new_state;
+                        }
+                        if ((double) (new_y + new_z) / new_x < m4_) {
+                            m4_ = (double) (new_y + new_z) / new_x;
+                            m4 = new_state;
+                        }
+                        if ((new_y + new_z) < m6_) {
+                            m6_ = (new_y + new_z);
+                            m6 = new_state;
+                        }
+                        if (new_x * 1.5 >= new_z && !states.contains(new_state)) {
+                            states.add(new_state);
+                            B.add(new_state);
+                        }
+                    }
+                }
+            }
+            if (B.isEmpty()) {
+                A = new HashSet<>();
+            } else if (B.size() == 1) {
+                A = B;
+            } else {
+                A = new HashSet<>(m1, m2, m4, m6);
+            }
+        }
+        return -1;
+    }
 }
