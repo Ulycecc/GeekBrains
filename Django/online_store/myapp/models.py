@@ -27,7 +27,7 @@ class Order(models.Model):
     consumer = models.ForeignKey(Сonsumer, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    date = models.DateField(auto_now=True)
+    date = models.DateField()
 
     def __str__(self):
         return f'Name: {self.consumer}, product: {self.product}, amount: {self.amount},  date: {self.date}'
