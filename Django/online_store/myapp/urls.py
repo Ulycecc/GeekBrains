@@ -23,4 +23,9 @@ urlpatterns = [
     path('product/month/<int:consumer_id>/',
          views.product_month, name='month'),
     path('product/year/<int:consumer_id>/', views.product_year, name='year'),
+    path('postproduct/', views.post_product, name='postproduct'),
+    path('upload/', views.upload_image, name='upload_image'),
+    path('upload_base/<int:product_id>/',
+         views.upload_image_base, name='upload_image_base'),
+
 ]

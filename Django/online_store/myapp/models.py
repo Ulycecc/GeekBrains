@@ -17,7 +17,7 @@ class Product(models.Model):
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.IntegerField(max_length=5)
-    date = models.DateField(auto_now=True)
+    date = models.DateField()
 
     def __str__(self):
         return f'Name: {self.name}, description: {self.description}, price: {self.price},  quantity: {self.quantity}'
@@ -31,3 +31,8 @@ class Order(models.Model):
 
     def __str__(self):
         return f'Name: {self.consumer}, product: {self.product}, amount: {self.amount},  date: {self.date}'
+
+
+class ProductImage(models.Model):
+    product = models.ForeignKey(Product,  on_delete=models.CASCADE)
+    image = models.ImageField('Images', upload_to='images')
